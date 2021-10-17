@@ -36,5 +36,5 @@ class ComplainerManager:
                 return AuthManager.encode_token(complainer)
             raise Exception
         except Exception:
-            return BadRequest("Invalid username or password")
+            raise BadRequest("Invalid username or password")
 

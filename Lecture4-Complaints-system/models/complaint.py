@@ -11,8 +11,9 @@ class ComplaintModel(db.Model):
     title = db.Column(db.String(100), nullable=False)
     description = db.Column(db.Text, nullable=False)
     photo_url = db.Column(db.String(255), nullable=False)
+    amount= db.Column(db.Float, nullable=False)
     create_on = db.Column(db.DateTime, server_default=func.now())
-    role =db.Column(
+    status =db.Column(
         db.Enum(State),
         default=State.pending,
         nullable=False
