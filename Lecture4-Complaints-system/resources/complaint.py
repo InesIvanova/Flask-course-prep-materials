@@ -29,3 +29,19 @@ class ComplaintListCreate(Resource):
         complain = ComplaintManager.create(data, complainer.id)
         # Use dump, not load when schema and object are not the same
         return ComplaintResponseSchema().dump(complain)
+
+
+class ApproveComplaint(Resource):
+    @auth.login_required
+    @permission_required(RoleType.approver)
+    def put(self, id_):
+        ComplaintManager.approve(id_)
+        return 200
+
+
+class RejectComplainComplaint(Resource):
+    @auth.login_required
+    @permission_required(RoleType.approver)
+    def put(self, id_):
+        ComplaintManager.reject(id_)
+        return 200

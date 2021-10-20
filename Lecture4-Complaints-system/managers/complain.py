@@ -1,5 +1,6 @@
 from db import db
 from models.complaint import ComplaintModel
+from models.enums import State
 
 
 class ComplaintManager:
@@ -19,3 +20,11 @@ class ComplaintManager:
     def delete(id_):
         complain = ComplaintModel.query.filter_by(id=id_)
         complain.delete()
+
+    @staticmethod
+    def approve(id_):
+        ComplaintModel.query.filter_by(id=id_).update({"status": State.approved})
+
+    @staticmethod
+    def reject(id_):
+        ComplaintModel.query.filter_by(id=id_).update({"status": State.rejected})

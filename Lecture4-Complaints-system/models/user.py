@@ -30,7 +30,7 @@ class ApproverModel(BaseUserModel):
     certificate = db.Column(db.String(255), nullable=False)
     role = db.Column(
         db.Enum(RoleType),
-        default=RoleType.complainer,
+        default=RoleType.approver,
         nullable=False
     )
 

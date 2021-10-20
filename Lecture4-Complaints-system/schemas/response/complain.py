@@ -1,6 +1,7 @@
 from marshmallow import fields
-from models.enums import State
 from marshmallow_enum import EnumField
+
+from models.enums import State
 from schemas.bases import BaseComplainSchema
 
 
