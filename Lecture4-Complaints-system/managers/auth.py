@@ -5,7 +5,7 @@ from werkzeug.exceptions import Unauthorized
 from flask_httpauth import HTTPTokenAuth
 
 # Keep this imports because of the eval function
-from models.user import ComplainerModel, ApproverModel
+from models.user import ComplainerModel, ApproverModel, AdministratorModel
 
 
 class AuthManager:

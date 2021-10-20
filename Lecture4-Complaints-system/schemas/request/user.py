@@ -15,3 +15,11 @@ class RequestRegisterUserSchema(UserSchema):
 class RequestLoginUserSchema(UserSchema):
     pass
 
+
+class RequestCreateAdminSchema(RequestRegisterUserSchema):
+    pass
+
+
+class RequestCreateApproverSchema(RequestRegisterUserSchema):
+    certificate = fields.String(required=True)
+

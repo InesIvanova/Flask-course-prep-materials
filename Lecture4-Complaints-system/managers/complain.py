@@ -14,3 +14,8 @@ class ComplaintManager:
         db.session.add(c)
         db.session.flush()
         return c
+
+    @staticmethod
+    def delete(id_):
+        complain = ComplaintModel.query.filter_by(id=id_)
+        complain.delete()
