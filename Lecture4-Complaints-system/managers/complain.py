@@ -48,6 +48,9 @@ class ComplaintManager:
 
     @staticmethod
     def approve(id_):
+        wise_service = WiseService()
+        transaction = TransactionModel.query.filter_by(complaint_id=id_).first()
+        wise_service.fund_transfer(transaction.target_account_id, transaction.transfer_id)
         ComplaintModel.query.filter_by(id=id_).update({"status": State.approved})
 
     @staticmethod

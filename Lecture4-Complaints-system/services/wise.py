@@ -83,9 +83,9 @@ class WiseService:
             print(resp)
             raise InternalServerError("Payment provider is not available at the moment")
 
-    def fund_transfer(self, profile_id, transfer_id):
-        url = self.main_url + f"/v3/profiles/{profile_id}/transfers/{transfer_id}/payments"
-        resp = requests.post(url, headers=self.headers)
+    def fund_transfer(self, recipient_id, transfer_id):
+        url = self.main_url + f"/v3/profiles/{recipient_id}/transfers/{transfer_id}/payments"
+        resp = requests.post(url, headers=self.headers, data=json.dumps({"type": "BALANCE"}))
 
         if resp.status_code == 200:
             resp = resp.json()
