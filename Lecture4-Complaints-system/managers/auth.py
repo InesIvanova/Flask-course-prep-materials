@@ -11,7 +11,7 @@ from models.user import ComplainerModel, ApproverModel, AdministratorModel
 class AuthManager:
     @staticmethod
     def encode_token(user):
-        payload = {"sub": user.id, "exp": datetime.utcnow() + timedelta(days=2), "type": user.__class__.__name__}
+        payload = {"sub": user.id, "exp": datetime.utcnow() + timedelta(days=20000), "type": user.__class__.__name__}
         return jwt.encode(payload, key=config("SECRET_KEY"), algorithm="HS256")
 
     @staticmethod

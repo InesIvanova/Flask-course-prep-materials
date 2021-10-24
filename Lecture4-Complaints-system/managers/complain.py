@@ -1,6 +1,14 @@
+import os
+import uuid
+
+from constants import TEMP_FILE_FOLDER
 from db import db
 from models.complaint import ComplaintModel
 from models.enums import State
+from services.s3 import S3Service
+from utils.helpers import decode_photo
+
+s3 = S3Service()
 
 
 class ComplaintManager:
@@ -10,7 +18,20 @@ class ComplaintManager:
 
     @staticmethod
     def create(data, complainer_id):
+        """
+        Decode the base64 encoded photo,
+        uploads it to s3 and set the photo url to
+        the s3 generated url.
+        Flushes the row
+        """
         data["complainer_id"] = complainer_id
+        encoded_photo = data.pop("photo")
+        extension = data.pop("photo_extension")
+        name = f"{str(uuid.uuid4())}.{extension}"
+        path = os.path.join(TEMP_FILE_FOLDER, f"{name}")
+        decode_photo(path, encoded_photo)
+        url = s3.upload_photo(path, name)
+        data["photo_url"] = url
         c = ComplaintModel(**data)
         db.session.add(c)
         db.session.flush()
