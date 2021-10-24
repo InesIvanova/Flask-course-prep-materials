@@ -22,6 +22,7 @@ class ComplainerModel(BaseUserModel):
         default=RoleType.complainer,
         nullable=False
     )
+    iban = db.Column(db.String(22), nullable=False)
 
 
 class ApproverModel(BaseUserModel):

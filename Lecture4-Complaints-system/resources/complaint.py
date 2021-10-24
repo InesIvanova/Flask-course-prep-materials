@@ -26,7 +26,7 @@ class ComplaintListCreate(Resource):
     def post(self):
         complainer = auth.current_user()
         data = request.get_json()
-        complain = ComplaintManager.create(data, complainer.id)
+        complain = ComplaintManager.create(data, complainer)
         # Use dump, not load when schema and object are not the same
         return ComplaintResponseSchema().dump(complain)
 

@@ -1,12 +1,12 @@
 from flask_restful import Resource
 from flask import request
 from managers.user import ComplainerManager, ApproverManager, AdminManager
-from schemas.request.user import RequestRegisterUserSchema, RequestLoginUserSchema
+from schemas.request.user import RequestLoginUserSchema, RequestRegisterComplainerSchema
 from utils.decorators import validate_schema
 
 
 class RegisterComplainer(Resource):
-    @validate_schema(RequestRegisterUserSchema)
+    @validate_schema(RequestRegisterComplainerSchema)
     def post(self):
         data = request.get_json()
         token = ComplainerManager.register(data)
