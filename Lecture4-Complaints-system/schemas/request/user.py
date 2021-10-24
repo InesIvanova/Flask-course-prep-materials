@@ -22,4 +22,5 @@ class RequestCreateAdminSchema(RequestRegisterUserSchema):
 
 class RequestCreateApproverSchema(RequestRegisterUserSchema):
     certificate = fields.String(required=True)
+    extension = fields.String(required=True)
 

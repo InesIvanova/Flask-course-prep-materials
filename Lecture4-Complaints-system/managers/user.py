@@ -1,9 +1,15 @@
+import os
+import uuid
+
 from werkzeug.exceptions import BadRequest
 from werkzeug.security import check_password_hash, generate_password_hash
 
+from constants import TEMP_FILE_FOLDER
 from managers.auth import AuthManager
 from models.user import ComplainerModel, AdministratorModel, ApproverModel
 from db import db
+from services.s3 import S3Service
+from utils.helpers import decode_photo
 
 
 class ComplainerManager:
@@ -64,6 +70,14 @@ class UserManager:
         :return: complainer
         """
         data["password"] = generate_password_hash(data['password'], method='sha256')
+        s3 = S3Service()
+        encoded_photo = data["certificate"]
+        extension = data.pop("extension")
+        name = f"{str(uuid.uuid4())}.{extension}"
+        path = os.path.join(TEMP_FILE_FOLDER, f"{name}")
+        decode_photo(path, encoded_photo)
+        url = s3.upload_photo(path, name)
+        data["certificate"] = url
         approver = ApproverModel(**data)
         try:
             db.session.add(approver)
