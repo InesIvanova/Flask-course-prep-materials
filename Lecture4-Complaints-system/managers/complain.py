@@ -34,6 +34,7 @@ class ComplaintManager:
         path = os.path.join(TEMP_FILE_FOLDER, f"{name}")
         decode_photo(path, encoded_photo)
         url = s3.upload_photo(path, name)
+        os.remove(path)
         data["photo_url"] = url
         c = ComplaintModel(**data)
         db.session.add(c)
