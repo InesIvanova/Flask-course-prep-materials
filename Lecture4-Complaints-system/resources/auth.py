@@ -1,3 +1,4 @@
+from flask_cors import cross_origin
 from flask_restful import Resource
 from flask import request
 from managers.user import ComplainerManager, ApproverManager, AdminManager
@@ -15,10 +16,11 @@ class RegisterComplainer(Resource):
 
 class LoginComplainer(Resource):
     @validate_schema(RequestLoginUserSchema)
+    @cross_origin()
     def post(self):
         data = request.get_json()
         token = ComplainerManager.login(data)
-        return {"token": token}
+        return {"token": token, "role": "complainer"}
 
 
 class LoginApprover(Resource):
@@ -26,7 +28,7 @@ class LoginApprover(Resource):
     def post(self):
         data = request.get_json()
         token = ApproverManager.login(data)
-        return {"token": token}
+        return {"token": token, "role": "approver"}
 
 
 class LoginAdministrator(Resource):
@@ -34,4 +36,4 @@ class LoginAdministrator(Resource):
     def post(self):
         data = request.get_json()
         token = AdminManager.login(data)
-        return {"token": token}
+        return {"token": token, "role": "admin"}

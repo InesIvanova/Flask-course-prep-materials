@@ -12,11 +12,9 @@ from utils.decorators import permission_required, validate_schema
 
 class ComplaintListCreate(Resource):
     @auth.login_required
-    @permission_required(RoleType.complainer)
-    @validate_schema(RequestComplainSchema)
     def get(self):
-        complainer = auth.current_user()
-        complains = ComplaintManager.get_all_complainer_claims(complainer.id)
+        user = auth.current_user()
+        complains = ComplaintManager.get_all_complainer_claims(user)
         # Use dump, not load when schema and object are not the same
         return ComplaintResponseSchema().dump(complains, many=True)
 

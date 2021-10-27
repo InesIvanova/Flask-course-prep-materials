@@ -15,9 +15,9 @@ class S3Service:
         )
         self.bucket = config("AWS_BUCKET")
 
-    def upload_photo(self, path, key):
+    def upload_photo(self, path, key, ext):
         try:
-            self.s3.upload_file(path, self.bucket, key)
+            self.s3.upload_file(path, self.bucket, key, ExtraArgs={'ACL': 'public-read', 'ContentType': f'image/{ext}'})
             return f"https://{config('AWS_BUCKET')}.s3.{config('AWS_REGION')}.amazonaws.com/{key}"
         except ClientError:
             raise InternalServerError("S3 is not available at the moment")

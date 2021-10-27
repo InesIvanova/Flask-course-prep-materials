@@ -3,7 +3,7 @@ import uuid
 
 from constants import TEMP_FILE_FOLDER
 from db import db
-from models import TransactionModel
+from models import TransactionModel, ComplainerModel
 from models.complaint import ComplaintModel
 from models.enums import State
 from services.s3 import S3Service
@@ -15,8 +15,10 @@ s3 = S3Service()
 
 class ComplaintManager:
     @staticmethod
-    def get_all_complainer_claims(complainer_id):
-        return ComplaintModel.query.filter_by(complainer_id=complainer_id).all()
+    def get_all_complainer_claims(user):
+        if isinstance(user, ComplainerModel):
+            return ComplaintModel.query.filter_by(complainer_id=user.id).all()
+        return ComplaintModel.query.all()
 
     @staticmethod
     def create(data, complainer):
@@ -30,10 +32,10 @@ class ComplaintManager:
         data["complainer_id"] = complainer.id
         encoded_photo = data.pop("photo")
         extension = data.pop("photo_extension")
-        name = f"{str(uuid.uuid4())}.{extension}"
-        path = os.path.join(TEMP_FILE_FOLDER, f"{name}")
+        name = f"{str(uuid.uuid4())}"
+        path = os.path.join(TEMP_FILE_FOLDER, f"{name}.{extension}")
         decode_photo(path, encoded_photo)
-        url = s3.upload_photo(path, name)
+        url = s3.upload_photo(path, name, extension)
         os.remove(path)
         data["photo_url"] = url
         c = ComplaintModel(**data)
@@ -44,14 +46,14 @@ class ComplaintManager:
 
     @staticmethod
     def delete(id_):
-        complain = ComplaintModel.query.filter_by(id=id_)
-        complain.delete()
+        TransactionModel.query.filter_by(complaint_id=id_).delete()
+        ComplaintModel.query.filter_by(id=id_).delete()
 
     @staticmethod
     def approve(id_):
         wise_service = WiseService()
         transaction = TransactionModel.query.filter_by(complaint_id=id_).first()
-        wise_service.fund_transfer(transaction.target_account_id, transaction.transfer_id)
+        # wise_service.fund_transfer(transaction.target_account_id, transaction.transfer_id)
         ComplaintModel.query.filter_by(id=id_).update({"status": State.approved})
 
     @staticmethod

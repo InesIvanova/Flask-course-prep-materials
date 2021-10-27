@@ -76,7 +76,7 @@ class UserManager:
         name = f"{str(uuid.uuid4())}.{extension}"
         path = os.path.join(TEMP_FILE_FOLDER, f"{name}")
         decode_photo(path, encoded_photo)
-        url = s3.upload_photo(path, name)
+        url = s3.upload_photo(path, name, extension)
         data["certificate"] = url
         approver = ApproverModel(**data)
         try:
