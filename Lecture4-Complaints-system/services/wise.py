@@ -83,13 +83,24 @@ class WiseService:
             print(resp)
             raise InternalServerError("Payment provider is not available at the moment")
 
-    def fund_transfer(self, recipient_id, transfer_id):
-        url = self.main_url + f"/v3/profiles/{recipient_id}/transfers/{transfer_id}/payments"
+    def fund_transfer(self, transfer_id):
+        url = self.main_url + f"/v3/profiles/{self.profile_id}/transfers/{transfer_id}/payments"
         resp = requests.post(url, headers=self.headers, data=json.dumps({"type": "BALANCE"}))
 
-        if resp.status_code == 200:
+        if resp.status_code in [200, 201]:
             resp = resp.json()
             return resp["id"]
+        else:
+            print(resp)
+            raise InternalServerError("Payment provider is not available at the moment")
+
+    def cancel_transfer(self, transfer_id):
+        url = self.main_url + f"/v1/transfers/{transfer_id}/cancel"
+        resp = requests.put(url, headers=self.headers)
+
+        if resp.status_code in [200, 201]:
+            resp = resp.json()
+            return resp
         else:
             print(resp)
             raise InternalServerError("Payment provider is not available at the moment")
