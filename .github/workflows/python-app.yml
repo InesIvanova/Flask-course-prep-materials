@@ -9,17 +9,17 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-#     services:
-#       postgres:
-#         image: postgres:13.3
-#         env:
-#           POSTGRES_USER: postgres
-#           POSTGRES_PASSWORD: ines123
-#           POSTGRES_DB: test_db
-#         ports:
-#           - 5433:5433
-#         # needed because the postgres container does not provide a healthcheck
-#         options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+    services:
+      postgres:
+        image: postgres:13.3
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: ines123
+          POSTGRES_DB: test_db
+        ports:
+          - 5433:5433
+        # needed because the postgres container does not provide a healthcheck
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
 
     steps:
     - uses: actions/checkout@v2
@@ -44,6 +44,7 @@ jobs:
         cd Lecture4-Complaints-system
         python -m pip install --upgrade pip
         pip install -r requirements.txt
+        psql -h localhost -d test_db -U postgres -c 'select * from approvers;'
         pytest
 
         
