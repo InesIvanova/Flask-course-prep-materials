@@ -40,6 +40,7 @@ jobs:
         AWS_REGION: ""
         WISE_TOKEN: ""
         WISE_URL: "" 
+        POSTGRES_PASSWORD: ines123
       run: |
         cd Lecture4-Complaints-system
         python -m pip install --upgrade pip
