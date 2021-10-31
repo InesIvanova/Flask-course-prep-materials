@@ -8,8 +8,18 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:13.3
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: test_db
+        ports:
+          - 5433:5433
+        # needed because the postgres container does not provide a healthcheck
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
 
     steps:
     - uses: actions/checkout@v2
@@ -18,9 +28,22 @@ jobs:
       with:
         python-version: "3.7"
     - name: Install dependencies and test
+      env:
+        DB_USER:""
+        DB_PASSWORD:''
+        DB_PORT:''
+        DB_NAME:''
+        SECRET_KEY:""
+        AWS_ACCESS_KEY:""
+        AWS_SECRET:""
+        AWS_BUCKET:""
+        AWS_REGION:""
+        WISE_TOKEN:""
+        WISE_URL:""   
       run: |
         cd Lecture4-Complaints-system
         python -m pip install --upgrade pip
         pip install -r requirements.txt
         pytest
+
         
