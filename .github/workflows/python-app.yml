@@ -29,17 +29,17 @@ jobs:
         python-version: "3.7"
     - name: Install dependencies and test
       env:
-        DB_USER:""
-        DB_PASSWORD:''
-        DB_PORT:''
-        DB_NAME:''
-        SECRET_KEY:""
-        AWS_ACCESS_KEY:""
-        AWS_SECRET:""
-        AWS_BUCKET:""
-        AWS_REGION:""
-        WISE_TOKEN:""
-        WISE_URL:""   
+        DB_USER: ""
+        DB_PASSWORD: ''
+        DB_PORT: ''
+        DB_NAME: ''
+        SECRET_KEY: ""
+        AWS_ACCESS_KEY: ""
+        AWS_SECRET: ""
+        AWS_BUCKET: ""
+        AWS_REGION: ""
+        WISE_TOKEN: ""
+        WISE_URL: "" 
       run: |
         cd Lecture4-Complaints-system
         python -m pip install --upgrade pip
