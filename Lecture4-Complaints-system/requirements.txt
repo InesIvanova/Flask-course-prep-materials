@@ -1,5 +1,6 @@
 alembic==1.7.3
 aniso8601==9.0.1
+boto3==1.19.2
 click==8.0.1
 colorama==0.4.4
 Flask==2.0.1
