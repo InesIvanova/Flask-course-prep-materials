@@ -14,10 +14,10 @@ jobs:
         image: postgres:13.3
         env:
           POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: postgres
+          POSTGRES_PASSWORD: ines123
           POSTGRES_DB: test_db
         ports:
-          - 5433:5433
+          - 5432:5432
         # needed because the postgres container does not provide a healthcheck
         options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
 
@@ -29,21 +29,25 @@ jobs:
         python-version: "3.7"
     - name: Install dependencies and test
       env:
-        DB_USER:""
-        DB_PASSWORD:''
-        DB_PORT:''
-        DB_NAME:''
-        SECRET_KEY:""
-        AWS_ACCESS_KEY:""
-        AWS_SECRET:""
-        AWS_BUCKET:""
-        AWS_REGION:""
-        WISE_TOKEN:""
-        WISE_URL:""   
+        DB_USER: "postgres"
+        DB_PASSWORD: 'ines123'
+        DB_PORT: '5432'
+        DB_NAME: 'test_db'
+        SECRET_KEY: ""
+        AWS_ACCESS_KEY: ""
+        AWS_SECRET: ""
+        AWS_BUCKET: ""
+        AWS_REGION: ""
+        WISE_TOKEN: ""
+        WISE_URL: "" 
+        POSTGRES_PASSWORD: ines123
+        POSTGRES_USER: postgres
+        POSTGRES_DB: test_db
       run: |
         cd Lecture4-Complaints-system
         python -m pip install --upgrade pip
         pip install -r requirements.txt
+        export PGPASSWORD="ines123"
         pytest
 
         
