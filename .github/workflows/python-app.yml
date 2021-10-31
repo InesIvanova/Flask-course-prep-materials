@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     services:
       postgres:
-        image: postgres:13.4.2
+        image: postgres:13.3
         env:
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: ines123
