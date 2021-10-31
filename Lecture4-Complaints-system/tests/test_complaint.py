@@ -71,16 +71,18 @@ class TestComplaint(TestCase):
         name = mock_uuid() + "." + data["photo_extension"]
         path = os.path.join(TEMP_FILE_FOLDER, name)
 
+        complaints = ComplaintModel.query.all()
+        self.assertEqual(len(complaints), 1)
+        self.assertEqual(complaints[0].id, resp["id"])
+
         mocked_upload.assert_called_once_with(
             path, mock_uuid(), data["photo_extension"]
         )
         mock_transaction.assert_called_once_with(
-            data["amount"], f"{comp.first_name} {comp.last_name}", comp.iban, comp.id
+            data["amount"], f"{comp.first_name} {comp.last_name}", comp.iban, complaints[0].id
         )
 
-        complaints = ComplaintModel.query.all()
-        self.assertEqual(len(complaints), 1)
-        self.assertEqual(complaints[0].id, resp["id"])
+
 
     def test_complaint_missing_input_fields_raises(self):
         comp = ComplainerFactory()

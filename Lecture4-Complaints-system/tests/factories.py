@@ -19,7 +19,7 @@ class ComplainerFactory(BaseFactory):
     class Meta:
         model = ComplainerModel
 
-    id = 1
+    id = factory.Sequence(lambda n: n)
     first_name = factory.Faker("first_name")
     last_name = factory.Faker("last_name")
     email = factory.Faker("email")
