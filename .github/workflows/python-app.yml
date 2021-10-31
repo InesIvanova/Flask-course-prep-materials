@@ -48,7 +48,6 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
         export PGPASSWORD="ines123"
-        psql -h localhost -d test_db -U postgres -w  -c 'select * from complainers;'
         pytest
 
         
