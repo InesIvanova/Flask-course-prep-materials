@@ -59,5 +59,6 @@ class TestComplaint(TestCase):
         complaints = ComplaintModel.query.all()
         self.assertEqual(len(complaints), 1)
         self.assertEqual(complaints[0].id, resp["id"])
+        a = 5
 
 
