@@ -44,7 +44,7 @@ jobs:
         cd Lecture4-Complaints-system
         python -m pip install --upgrade pip
         pip install -r requirements.txt
-        psql -h localhost -d test_db -U postgres -c 'select * from complainers;'
+        psql -h localhost -d test_db -U postgres -W ines123 -c 'select * from complainers;'
         pytest
 
         
