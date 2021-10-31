@@ -41,11 +41,13 @@ jobs:
         WISE_TOKEN: ""
         WISE_URL: "" 
         POSTGRES_PASSWORD: ines123
+        POSTGRES_USER: postgres
+        POSTGRES_DB: test_db
       run: |
         cd Lecture4-Complaints-system
         python -m pip install --upgrade pip
         pip install -r requirements.txt
-        psql -h localhost -d test_db -U postgres -W ines123 -c 'select * from complainers;'
+        psql -h localhost -d test_db -U postgres -w ines123 -c 'select * from complainers;'
         pytest
 
         
