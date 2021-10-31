@@ -17,7 +17,7 @@ jobs:
           POSTGRES_PASSWORD: ines123
           POSTGRES_DB: test_db
         ports:
-          - 5433:5433
+          - 5432:5432
         # needed because the postgres container does not provide a healthcheck
         options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
 
@@ -31,7 +31,7 @@ jobs:
       env:
         DB_USER: "postgres"
         DB_PASSWORD: 'ines123'
-        DB_PORT: '5433'
+        DB_PORT: '5432'
         DB_NAME: 'test_db'
         SECRET_KEY: ""
         AWS_ACCESS_KEY: ""
