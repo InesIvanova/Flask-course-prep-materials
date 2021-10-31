@@ -1,7 +1,7 @@
 from config import create_app
 from db import db
 
-app = create_app(db)
+app = create_app()
 
 
 @app.before_first_request

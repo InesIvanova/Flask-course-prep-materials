@@ -36,6 +36,3 @@ class ComplaintManagement(Resource):
     def delete(self, id_):
         ComplaintManager.delete(id_)
         return 204
-
-    def post(self, id_):
-        return 201

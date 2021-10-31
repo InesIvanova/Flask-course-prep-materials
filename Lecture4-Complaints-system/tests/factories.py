@@ -19,11 +19,11 @@ class ComplainerFactory(BaseFactory):
     class Meta:
         model = ComplainerModel
 
-    id = factory.Sequence(lambda x: x+1)
-    first_name = factory.Faker('first_name')
-    last_name = factory.Faker('last_name')
-    email = factory.Faker('email')
+    id = factory.Sequence(lambda x: x + 1)
+    first_name = factory.Faker("first_name")
+    last_name = factory.Faker("last_name")
+    email = factory.Faker("email")
     phone = str(randint(100000, 200000))
-    password = factory.Faker('password')
+    password = factory.Faker("password")
     role = RoleType.complainer
-    iban = factory.Faker('iban')
+    iban = factory.Faker("iban")
